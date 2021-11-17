@@ -31,5 +31,3 @@ if (mBmi > jBmi) {
 else {
   alert("John's BMI(" +jBmi+ ") is higher than Mark's BMI("+mBmi+").")
 }
-
-//                          Challenge3
