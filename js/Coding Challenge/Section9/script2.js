@@ -71,5 +71,5 @@ console.log(4);
 const scorers = {
 
 }
-const p = [,...game.scored,];
+const p = [...game.scored];
 console.log(p);
