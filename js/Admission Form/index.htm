@@ -13,30 +13,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <title>CRUD Operations</title>
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $('[data-toogle = "tooltip"]').tooltip();
-
-      var checkbox = $('table tbody input[type="checkbox"]');
-      $('#selectAll').click(function () {
-        if (this.checked) {
-          checkbox.each(function () {
-            this.checked = true;
-          });
-        } else {
-          checkbox.each(function () {
-            this.checked = false;
-          });
-        }
-      });
-      checkbox.click(function () {
-        if (!this.checked) {
-          $('#selectAll').prop("checked", false);
-        }
-      });
-    });
-  </script>
+  <script src="script.js"></script>
 
 
 </head>
