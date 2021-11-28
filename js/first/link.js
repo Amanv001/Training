@@ -31,3 +31,6 @@ if(ans == [question.get('correct')]){
 else{
   console.log([question.get('false')]);
 }
+
+var a = ['dog','cat','hen'];
+a[100] = 'fox';

@@ -13,8 +13,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <title>CRUD Operations</title>
-  <script src="script.js"></script>
-  <script src="module.js" type="module"></script>
+  <!-- <script src="script.js"></script> -->
+  <!-- <script src="module.js" type="module"></script> -->
+
+  
+  
 
 </head>
 
@@ -34,115 +37,7 @@
           </div>
         </div>
       </div>
-      <table class="table table-striped table-hover" id="studentLists">
-        <thead>
-          <tr>
-            <th>
-              <span class="custom-checkbox">
-                <input type="checkbox" id="selectAll">
-                <label for="selectAll"></label>
-              </span>
-            </th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- <tr>
-            <td>
-              <span class="custom-checkbox">
-                <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                <label for="checkbox1"></label>
-              </span>
-            </td>
-            <td>Aman Kumar</td>
-            <td>amankumar@benchmarkit.solutions</td>
-            <td>Patna,India</td>
-            <td>+91-7479868056</td>
-            <td>
-              <a href="#editStudentModal" class="edit" data-toggle="modal"><i class="material-icons"
-                  data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-              <a href="#deleteStudentModal" class="delete" data-toggle="modal"><i class="material-icons"
-                  data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="custom-checkbox">
-                <input type="checkbox" id="checkbox2" name="options[]" value="1">
-                <label for="checkbox2"></label>
-              </span>
-            </td>
-            <td>Frank Woods</td>
-            <td>frankwoods@gmail.com</td>
-            <td>Pune,india</td>
-            <td>+91-989343424</td>
-            <td>
-              <a href="#editStudentModal" class="edit" data-toggle="modal"><i class="material-icons"
-                  data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-              <a href="#deleteStudentModal" class="delete" data-toggle="modal"><i class="material-icons"
-                  data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="custom-checkbox">
-                <input type="checkbox" id="checkbox3" name="options[]" value="1">
-                <label for="checkbox3"></label>
-              </span>
-            </td>
-            <td>Soap Mctavish</td>
-            <td>soapmactavish@mail.com</td>
-            <td>Modal Town,Delhi</td>
-            <td>+91-732490023</td>
-            <td>
-              <a href="#editStudentModal" class="edit" data-toggle="modal"><i class="material-icons"
-                  data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-              <a href="#deleteStudentModal" class="delete" data-toggle="modal"><i class="material-icons"
-                  data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="custom-checkbox">
-                <input type="checkbox" id="checkbox4" name="options[]" value="1">
-                <label for="checkbox4"></label>
-              </span>
-            </td>
-            <td>Katherine Willams</td>
-            <td>kathrinewilliams@mail.com</td>
-            <td>Surat, India</td>
-            <td>+91- 9902234441</td>
-            <td>
-              <a href="#editStudentModal" class="edit" data-toggle="modal"><i class="material-icons"
-                  data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-              <a href="#deleteStudentModal" class="delete" data-toggle="modal"><i class="material-icons"
-                  data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="custom-checkbox">
-                <input type="checkbox" id="checkbox5" name="options[]" value="1">
-                <label for="checkbox5"></label>
-              </span>
-            </td>
-            <td>Harper </td>
-            <td>harper@mail.com</td>
-            <td>Coimbatore, India</td>
-            <td>+91- 7792834244</td>
-            <td>
-              <a href="#editStudentModal" class="edit" data-toggle="modal"><i class="material-icons"
-                  data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-              <a href="#deleteStudentModal" class="delete" data-toggle="modal"><i class="material-icons"
-                  data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-            </td>
-          </tr> -->
-        </tbody>
-      </table>
+      <div id="tabledata"></div>
       <div class="clearfix">
         <div class="hint-text">Showing <b>5 </b>entries</div>
         <ul class="pagination">
@@ -169,7 +64,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form onsubmit="onFormSubmit()">
+          <form>
             <div class="form-group">
               <label for="InputName">Name</label>
               <input type="text" class="form-control" id="InputName" aria-describedby="nameHelp"
@@ -190,7 +85,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="addStudent">Add Student</button>
+          <button type="button" class="btn btn-primary" onClick="addStudent()">Add Student</button>
         </div>
       </div>
     </div>
@@ -213,7 +108,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger">Delete</button>
+          <button type="button" class="btn btn-danger" id="delete">Delete</button>
         </div>
       </div>
     </div>
@@ -253,11 +148,88 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary">Save changes</button>
+          <input type="hidden" id="hiddendata">
         </div>
       </div>
     </div>
   </div>
 
 </body>
+
+<script>
+
+    $(document).ready(function(){
+      displayData();
+    });
+
+    function displayData(){
+      var displayData = "true";
+      $.ajax({
+        url: "display.php",
+        type:'post',
+        data:{
+          displaySend: displayData
+        },
+        success:function(data,status){
+          $('#tabledata').html(data);
+          console.log(status);
+        }
+      })
+    }
+
+    function addStudent() {
+      console.log("add called");
+      var name = $('#InputName').val();
+      var email = $('#InputEmail').val();
+      var add = $('#InputAddress').val();
+      var phone = $('#InputPhone').val();
+
+      $.ajax({
+        url: "insert.php",
+        type: 'post',
+        data: {
+          nameSend: name,
+          emailSend: email,
+          addSend: add,
+          phoneSend: phone
+        },
+        success: function (data, status) {
+          console.log(status);
+          displayData();
+        }
+      })
+    }
+
+    function deleteStudent(deleteid){
+      console.log("delete called");
+      $.ajax({
+        url:"delete.php",
+        type:'post',
+        data: {
+          deleteSend: deleteid
+        },
+        success: function (data, status){
+          displayData();
+          console.log(status);
+        }
+      });
+    }
+
+    function updateStudent(updateid){
+      console.log("update called");
+      $('#hiddendata').val(updateid)
+
+      $.post("update.php",{updateid:updateid},function(data,status){
+        var userid = JSON.parse(data);
+        $('updatename').val(userid.name);
+        $('updateemail').val(userid.email);
+        $('updatplace').val(userid.place);
+        $('updatemobile').val(userid.mobile);
+      });
+
+      $('#editStudentModal').modal("show");
+    }
+
+  </script>
 
 </html>
