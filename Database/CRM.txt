@@ -1,0 +1,269 @@
+-- Database: CRM
+
+-- DROP DATABASE IF EXISTS "CRM";
+
+CREATE DATABASE "CRM"
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'English_United States.1252'
+    LC_CTYPE = 'English_United States.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+	
+-- creating table task
+create table task(
+	task_id int primary key,
+	task_name varchar(25) not null,
+	task_desc varchar(25) not null,
+	task_status varchar(25) not null,
+	start_date date,
+	expected_end_date date,
+	actual_end_date date,
+	assigned_by varchar(25) not null,
+	module_id int,
+	module_name varchar(25) not null,
+	emp_id int references employee(emp_id)
+);
+
+--creating table person
+create table person(
+	person_id int primary key,
+	first_name varchar(25) not null,
+	last_name varchar(25) not null,
+	gender char(2),
+	date_of_birth date,
+	email varchar(255) not null,
+	contact_no bigint,
+	address varchar(30)
+);
+
+--creating table plan
+create table plan(
+	plan_id int primary key,
+	plan_name varchar(25),
+	plan_validity varchar(25),
+	plan_data varchar(20) not null,
+	plan_price char(15) not null
+);
+
+--creating table employee
+create table employee(
+	emp_id int primary key,
+	designation varchar(25) not null,
+	person_id int references person(person_id),
+	cust_id int references customer(cust_id)
+);
+
+--creating table lead
+create table lead(
+	lead_id int primary key,
+	created_at date not null,
+	created_by varchar(30) not null,
+	person_id int references person(person_id)
+);
+
+--creating table opportunity
+create table opportunity(
+	op_id int primary key,
+	created_at date not null,
+	op_status varchar(30) not null,
+	emp_id int references employee(emp_id),
+	lead_id int references lead(lead_id),
+	plan_id int references plan(plan_id)
+);
+
+--creating table customer
+create table customer(
+	cust_id int primary key,
+	cust_username varchar(30)not null,
+	cust_password varchar(30)not null,
+	account_details varchar(30) not null,
+	op_id int references opportunity(op_id),
+	plan_id int references plan(plan_id)
+);
+
+-- inserting data in person table
+insert into person(person_id,first_name,last_name,gender,date_of_birth,email,contact_no,address)
+values (01,'Aman','Sharma','M','1998-03-20','aman@gmail.com',489238324,'Pune'),
+		(02,'Anand','Sharma','M','1999-03-02','anand@gmail.com',390989892,'Pune'),
+		(03,'Aarohi','Verma','F','2008-11-20','aarohi@gmail.com',909032423,'Patiala'),
+		(04,'Ravi','Karn','M','2003-08-08','ravi@gmail.com',9902839423,'Delhi'),
+		(05,'Riya','Raj','F','1995-10-01','riya@gmail.com',988891233,'Mumbai'),
+		(06,'Sia','Sharma','F','1997-03-03','sia@gmail.com',892323434,'Patna'),
+		(07,'Sia','Farukh','F','1998-08-05','shreya@gmail.com',999889823,'Delhi'),
+		(08,'Aditi','Raj','F','1999-03-11','aditi@gmail.com',776879234,'Dehradun'),
+		(09,'Ajay','Dave','M','1998-05-05','ajay@gmail.com',89983444,'Sikkim'),
+		(10,'Ajay','Singh','M','1993-04-30','aditya@gmail.com',997732944,'Lucknow'),
+		(11,'Hiren','haran','M','1996-11-30','hiren@gmail.com',9923483424,'Bangalore'),
+		(12,'Shilpa','Sharma','F','2001-12-23','shilpa@gmail.com',55399355,'Chennai'),
+		(13,'Saurabh','Singh','M','1993-12-12','abhishek@gmail.com',88832422,'Pune'),
+		(14,'Frank','woods','M','1995-11-30','frank@gmail.com',923422444,'Hyderabad'),
+		(15,'Soap','Mctavish','M','1993-04-30','soap@gmail.com',88324772,'Ranchi')
+		
+
+-- inserting data in lead table
+insert into lead(lead_id,created_at,created_by,person_id)
+values(1,'2021-09-04',1,1),
+	   (2,'2021-09-09',2,2),
+	   (3,'2020-10-04',2,3),
+	   (4,'2019-10-07',1,4),
+	   (5,'2021-04-04',3,5),
+	   (6,'2021-08-11',3,6),
+	   (7,'2012-12-04',2,7),
+	   (8,'2020-10-05',3,8),
+	   (9,'2021-01-18',4,9),
+	   (10,'2021-03-25',4,10)
+	   
+-- inserting data in plan table
+insert into plan(plan_id,plan_name,plan_validity,plan_data,plan_price)
+values(1,'cricket','3 months','20mbps','1500'),
+		(2,'new year','6 months','30mbps','1800'),
+		(3,'regular','3 months','15mbps','1000'),
+		(4,'wfh','8 months','75mbps','2000'),
+		(5,'christmas','6 months','18mbps','1200')
+	   
+-- inserting data in opportunity table
+insert into opportunity(op_id, created_at, op_status, emp_id, lead_id, plan_id)
+values(1, '2021-10-03','true',2,2,1),
+	   (2, '2020-10-10','true',2,3,5),
+	   (3, '2021-10-03','false',1,1,3),
+	   (4, '2021-11-10','true',4,9,4),
+	   (5, '2019-10-10','false',1,4,1),
+	   (6, '2015-10-27','true',2,7,4),
+	   (7, '2021-10-06','false',3,6,4),
+	   (8, '2021-07-03','true',3,5,1),
+	   (9, '2021-08-18','true',4,10,4),
+	   (10, '2021-01-03','true',3,8,5)
+	   
+-- inserting data in customer table
+insert into customer(cust_id,cust_username,cust_password,account_details,plan_id)
+values(1,'ravi','ravil123',1,3),
+	   (2,'riya','riya123',2,3),
+	   (3,'anand','anand123',3,5),
+	   (4,'sia','sia123',4,4),
+	   (5,'ajay','ajay123',5,4),
+	   (6,'aarohi','aarohi123',2,4)
+	   
+-- inserting data in employee table
+insert into employee(emp_id,designation,person_id,cust_id)
+values(1,'manager',11,1),
+(2,'admin',12,4),
+(3,'manager',13,5),
+(4,'manager',14,4),
+(5,'admin',11,2)
+
+-- inserting data in task table
+insert into task(task_id, task_name,task_desc,task_status,start_date,expected_end_date,actual_end_date,assigned_by,module_id,module_name,emp_id)
+values(1,'t001','lead to customer','on hold','2021-10-19','2022-03-15',null,11,1,'lead',1),
+	   (2,'t002','lead to customer','Done','2021-01-15','2021-02-15','2021-03-03',12,2,'customer',2),
+	   (3,'t003','lead to customer','processing','2021-01-15','2021-12-15',null,13,1,'lead',3),
+	   (4,'t004','new plan to customer','Done','2021-03-13','2021-03-10',null,14,2,'customer',4),
+	   (5,'t005','lead to customer','processing','2021-03-13','2021-10-28','2021-12-01',15,2,'customer',5)
+
+
+-- query 2
+update opportunity
+set op_status = 'true'
+where op_id = 3
+
+-- query 3
+select * from lead;
+
+-- query 4
+select * from lead
+join opportunity op
+on lead.lead_id = op.lead_id
+where op_status = 'true'
+
+-- query 5
+--Query to get all leads converted to Account
+select le.lead_id ,le.created_at, le.person_id, cus.cust_id, op.op_id
+	from lead le
+	join opportunity op ON opp.lead_id = le.lead_id
+	join customer cus ON cus.op_id = op.op_id;
+
+
+--query 6
+--Query to get All contacts of an Account
+select le.lead_id ,le.created_at, le.person_id, cus.cust_id, op.op_id
+from lead le
+join opportunity op ON op.lead_id = le.lead_id
+join customer cus ON cus.op_id = op.op_id;
+
+
+--query 7
+--Query to get the count of task Module wise
+select count(*) from task
+
+--query 8
+--Query to get All tasks of Leads, Opportunity, Account
+select * from task
+where module_name in ('lead','opportunity','customer')
+
+--query 9
+--Query to get all accounts that do not have contacts
+select cus.cust_id , pe.person_id, pe.contact_no, pe.first_name
+	from customer cus 
+	join opportunity op ON op.op_id = cus.op_id
+	join lead le ON  le.lead_id = op.lead_id
+	join person pe ON  pe.person_id=  le.person_id
+	where pe.contact_no = 0;
+
+
+--query 10
+--Query to get all task which is not created today.
+select * from task
+where start_date != '2021-12-05'
+
+--query11
+--Query to get all the task completed
+select * from task
+where task_status = 'Done'
+
+--query12
+--Query to get all upcoming tasks
+select * from task
+where expected_end_date > '2021-12-05'
+
+--query13
+--Query to fetch account and its contacts with account id, account name
+select cus.cust_id , cus.account_details, pe.contact_no, pe.first_name
+	from customer cus 
+	join opportunity op ON op.op_id = cus.op_id
+	join lead le ON  le.lead_id = op.lead_id
+	join person pe ON  pe.person_id=  le.person_id;
+
+
+--query14
+--Query to get the count of leads which is converted to account
+select count(*)
+from lead
+join opportunity op
+on lead.lead_id = op.lead_id
+where op_status = 'true'
+
+--query 15
+--Query to get all Opportunity
+select * from opportunity
+
+--query 16
+--Query to get all Opportunity which converted to Account
+select * from opportunity
+where op_status = 'true'
+
+--query 17
+--Query to get count which plan is taken how many times
+select count(plan_id) from customer group by plan_id;
+
+
+
+
+
+
+
+
+
+
+
+

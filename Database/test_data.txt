@@ -1,0 +1,81 @@
+-- Database: test
+
+-- DROP DATABASE IF EXISTS test;
+
+CREATE DATABASE test
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'English_United States.1252'
+    LC_CTYPE = 'English_United States.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+	
+create table examples(
+	example_id serial primary key,
+	first_name varchar(30),
+	last_name varchar(30)
+);
+
+select * from examples;
+
+alter table examples 
+add column email varchar(55) unique;
+
+alter table examples
+add column nationality varchar(30),
+add column age int not null;
+
+alter table examples 
+alter column nationality  type char(3);
+
+alter table examples
+alter column last_name type varchar(50),
+alter column email type varchar(80);
+
+create table practice(
+	id serial primary key,
+	product_name varchar(50),
+	product_price numeric(4,2)
+);
+select * from practice;
+
+drop table practice;
+
+-- inerting data in a table
+
+insert into examples (first_name, last_name, email, nationality,age)
+values ('David','Mitchell','dmitchell@gmail.com','GBR',43);
+
+insert into examples (first_name, last_name, email, nationality,age)
+values ('Emily','Watson','ewatson@gmail.com','USA',29),('Theo','Scott','tscott@gmail.com','AUS',33)
+,('Emily','Smith','esmith@gmail.com','GBR',29),('Jim','Burr','jburr@gmail.com','USA',54);
+
+select * from examples;
+
+-- updating data in table
+
+update examples
+set email = 'davidmitchell@gmail.com'
+where example_id = 1;
+
+update examples 
+set nationality = 'CAN'
+where nationality = 'USA';
+
+update examples
+set first_name = 'James',
+age = 55
+where example_id = 5;
+
+-- deleting data from table
+delete from examples
+where example_id = 2;
+
+delete from examples
+where nationality = 'GBR';
+
+delete from examples;
+
+select * from examples;
+
