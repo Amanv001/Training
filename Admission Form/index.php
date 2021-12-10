@@ -18,6 +18,22 @@
 
 <body>
 
+  <?php
+    include 'db.php';
+    
+
+    $selectSQL = 'SELECT * FROM student_info';
+    $result = mysqli_query($conn,$selectSQL);
+    if ($result) {
+      // $row = mysqli_fetch_assoc($result);
+        // while ($row = mysqli_fetch_array($result)) {
+        //     foreach($row as $data){
+        //         echo $data;
+        //     }
+        // }
+    }
+?>
+
   <div class="container">
 
     <div class="page-header-extended">
@@ -33,7 +49,7 @@
       </div>
 
 
-
+      <!-- Add module start -->
       <div class="modal fade" id="addnewModal" tabindex="-1" role="dialog" aria-labelledby="addnewModalTitle"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -43,30 +59,31 @@
             </div>
 
             <div class="modal-body">
-              <form name="myform" id="input_form" onsubmit="saveStudentInfo();">
+              <form name="myform" id="input_form" onsubmit="return validateForm(myform)" method="post"
+                action="insert.php">
                 <div class="form-group">
                   <label for="name">Name
                     <span class="required-field">*</span>
                   </label>
-                  <input type="text" class="form-control" placeholder="Enter Name" id="name" required />
+                  <input type="text" class="form-control" placeholder="Enter Name" id="name" name="name" />
                 </div>
                 <div class="form-group">
                   <label for="email">Email
                     <span class="required-field">*</span>
                   </label>
-                  <input type="email" class="form-control" placeholder="Enter Email" id="email" required />
+                  <input type="email" class="form-control" placeholder="Enter Email" id="email" name="email" />
                 </div>
                 <div class="form-group">
                   <label for="phone">Phone
                     <span class="required-field">*</span>
                   </label>
-                  <input type="phone" class="form-control" placeholder="Enter phone number" id="phone" required />
+                  <input type="phone" class="form-control" placeholder="Enter phone number" id="phone" name="phone" />
                 </div>
                 <div class="form-group">
                   <label for="place">Place
                     <span class="required-field">*</span>
                   </label>
-                  <input type="place" class="form-control" placeholder="Enter place" id="place" required />
+                  <input type="place" class="form-control" placeholder="Enter place" id="place" name="place" />
                 </div>
 
                 <div class="modal-footer-extended">
@@ -79,6 +96,7 @@
           </div>
         </div>
       </div>
+      <!-- Add Module end -->
 
       <table id="student_table" class="table table-bordered table-striped table-hover">
         <thead>
@@ -99,6 +117,21 @@
             <th>Actions</th>
           </tr>
         </thead>
+        <tbody>
+        <?php
+          while($row = mysqli_fetch_array( $result )){
+            echo
+            "<tr>
+              <td>{$row['sno']}</td>
+              <td>{$row['name']}</td>
+              <td>{$row['email']}</td>
+              <td>{$row['phone']}</td>
+              <td>{$row['place']}</td>
+              <td><button class='btn btn-sm btn-primary')'><i class='fa fa-pencil' aria-hidden='true'></i></button>&nbsp;<button class='btn btn-sm btn-danger')'><i class='fa fa-trash' aria-hidden='true'></i></button></td>
+            </tr>\n";
+          }
+        ?>
+        </tbody>
       </table>
 
       <div class="show-table-info hide">
@@ -121,30 +154,30 @@
             <h4 class="modal-title" id="editModal"><strong>EDIT</strong></h4>
           </div>
           <div class="modal-body">
-            <form onsubmit="updateStudentData(); return false;">
+            <form onsubmit="return validateForm()" name="editForm">
               <div class="form-group">
                 <label for="edit_name">Name
                   <span class="required-field">*</span>
                 </label>
-                <input type="text" class="form-control" placeholder="Enter Name" id="edit_name" required />
+                <input type="text" class="form-control" name="name" placeholder="Enter Name" id="edit_name" />
               </div>
               <div class="form-group">
                 <label for="edit_email">Email
                   <span class="required-field">*</span>
                 </label>
-                <input type="email" class="form-control" placeholder="Enter Email" id="edit_email" required />
+                <input type="email" class="form-control" placeholder="Enter Email" id="edit_email" />
               </div>
               <div class="form-group">
                 <label for="phone">Phone
                   <span class="required-field">*</span>
                 </label>
-                <input type="phone" class="form-control" placeholder="Enter Author Name" id="edit_phone" required />
+                <input type="phone" class="form-control" placeholder="Enter Author Name" id="edit_phone" />
               </div>
               <div class="form-group">
                 <label for="edit_place">Place
                   <span class="required-field">*</span>
                 </label>
-                <input type="text" class="form-control" placeholder="Enter Place" id="edit_place" required />
+                <input type="text" class="form-control" placeholder="Enter Place" id="edit_place" />
               </div>
 
               <div class="form-group">
