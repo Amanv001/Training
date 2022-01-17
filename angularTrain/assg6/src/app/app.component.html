@@ -1,0 +1,20 @@
+<form class="col-sm-6" #f="ngForm" (ngSubmit)="formSubmit()">
+  <div class="form-group">
+    <label for="email">Mail</label>
+    <input type="email" name="email" ngModel required email class="form-control" #email="ngModel">
+    <span class="help-block" *ngIf="!email.valid && email.touched">Please Enter a valid Email</span>
+  </div>
+  <div class="form-group">
+    <label for="subscription">Choose a Subscription</label>
+    <select name="subscription" id="subscription" [ngModel]="selectedSubscription" class="form-control">
+      <option *ngFor="let subscription of subscriptions" [value]="subscription"> {{subscription}} </option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" name="password" ngModel required class="form-control" required #pass="ngModel">
+    <span class="help-block" *ngIf="!pass.valid && pass.touched">Please Enter a valid Password</span>
+  </div>
+  <p *ngIf="!f.valid && f.touched">Invalid Form!</p>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
